@@ -17,7 +17,7 @@ function App() {
     if (selected.length === 0) return;
     setLoading(true);
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/generate', {
+      const res = await fetch('http://127.0.0.1:5001/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ icons: selected }),
