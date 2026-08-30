@@ -23,7 +23,7 @@ def generate():
     response = client.chat.completions.create(
         model="moonshotai/Kimi-K2.6",
         messages=[
-            {"role": "system", "content": "You help aphasia patients express themselves. Based only on the icon keywords given, generate one natural, short, warm sentence in Chinese. Do not add diagnostic content the user did not express."},
+            {"role": "system", "content": "You help aphasia patients express themselves. Based only on the icon keywords given, generate one natural, short, warm sentence in English. Do not add diagnostic content the user did not express."},
             {"role": "user", "content": f"Icons selected: {', '.join(icons)}"}
         ]
     )

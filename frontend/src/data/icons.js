@@ -1,22 +1,22 @@
 export const ICONS = [
-  // 情绪类
-  { id: 'happy', label: '开心', emoji: '😊', category: '情绪' },
-  { id: 'sad', label: '难受', emoji: '😢', category: '情绪' },
-  { id: 'scared', label: '害怕', emoji: '😨', category: '情绪' },
-  { id: 'want_cry', label: '想哭', emoji: '🥺', category: '情绪' },
-  { id: 'miss_family', label: '想家人', emoji: '❤️', category: '情绪' },
+  // Emotions
+  { id: 'happy', label: 'Happy', emoji: '😊', category: 'Emotions' },
+  { id: 'sad', label: 'Upset', emoji: '😢', category: 'Emotions' },
+  { id: 'scared', label: 'Scared', emoji: '😨', category: 'Emotions' },
+  { id: 'want_cry', label: 'Want to cry', emoji: '🥺', category: 'Emotions' },
+  { id: 'miss_family', label: 'Miss family', emoji: '❤️', category: 'Emotions' },
 
-  // 身体类
-  { id: 'pain', label: '疼痛', emoji: '🤕', category: '身体' },
-  { id: 'head', label: '头部', emoji: '🧠', category: '身体' },
-  { id: 'chest', label: '胸部', emoji: '🫁', category: '身体' },
-  { id: 'stomach', label: '腹部', emoji: '🤰', category: '身体' },
-  { id: 'tired', label: '累了', emoji: '😴', category: '身体' },
+  // Body
+  { id: 'pain', label: 'Pain', emoji: '🤕', category: 'Body' },
+  { id: 'head', label: 'Head', emoji: '🧠', category: 'Body' },
+  { id: 'chest', label: 'Chest', emoji: '🫁', category: 'Body' },
+  { id: 'stomach', label: 'Stomach', emoji: '🤰', category: 'Body' },
+  { id: 'tired', label: 'Tired', emoji: '😴', category: 'Body' },
 
-  // 需求类
-  { id: 'family', label: '家人', emoji: '👨‍👩‍👧', category: '需求' },
-  { id: 'water', label: '喝水', emoji: '💧', category: '需求' },
-  { id: 'bathroom', label: '如厕', emoji: '🚽', category: '需求' },
-  { id: 'rest', label: '休息', emoji: '🛏️', category: '需求' },
-  { id: 'doctor', label: '医生', emoji: '👨‍⚕️', category: '需求' },
+  // Needs
+  { id: 'family', label: 'Family', emoji: '👨‍👩‍👧', category: 'Needs' },
+  { id: 'water', label: 'Water', emoji: '💧', category: 'Needs' },
+  { id: 'bathroom', label: 'Bathroom', emoji: '🚽', category: 'Needs' },
+  { id: 'rest', label: 'Rest', emoji: '🛏️', category: 'Needs' },
+  { id: 'doctor', label: 'Doctor', emoji: '👨‍⚕️', category: 'Needs' },
 ];

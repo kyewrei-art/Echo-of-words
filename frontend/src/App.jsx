@@ -25,7 +25,7 @@ function App() {
       const data = await res.json();
       setSentence(data.sentence);
     } catch (err) {
-      setSentence('生成失败，请重试');
+      setSentence('Generation failed, please try again');
     }
     setLoading(false);
   };
@@ -34,7 +34,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>无声情绪日记</h1>
+      <h1>Silent Voice</h1>
 
       {categories.map(cat => (
         <div key={cat} className="category">
@@ -55,11 +55,11 @@ function App() {
       ))}
 
       <div className="selected-bar">
-        已选择: {selected.join(' → ') || '(无)'}
+        Selected: {selected.join(' → ') || '(None)'}
       </div>
 
       <button className="generate-btn" onClick={generate} disabled={loading}>
-        {loading ? '生成中...' : '生成'}
+        {loading ? 'Generating...' : 'Generate'}
       </button>
 
       {sentence && <div className="sentence-output">{sentence}</div>}
