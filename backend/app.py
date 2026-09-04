@@ -23,13 +23,30 @@ def generate():
     response = client.chat.completions.create(
         model="moonshotai/Kimi-K2.6",
         messages=[
-            {"role": "system", "content": "You help aphasia patients express themselves. Based only on the icon keywords given, generate one natural, short, warm sentence in English. Do not add diagnostic content the user did not express."},
-            {"role": "user", "content": f"Icons selected: {', '.join(icons)}"}
-        ]
+            {
+                "role": "system",
+                "content": (
+                    "Return ONLY the final sentence. "
+                    "You help aphasia patients express themselves. "
+                    "Generate one natural, warm English sentence based only on "
+                    "the meaning represented by the selected icons. "
+                    "Include all relevant information represented by the icons, "
+                    "but keep the sentence concise. "
+                    "Do not add information the user did not express. "
+                )
+            },
+            {
+                "role": "user",
+                "content": f"Icons: {', '.join(icons)}"
+            }
+        ],
+        max_tokens=60,
     )
 
     sentence = response.choices[0].message.content
+    if "</think>" in sentence:
+        sentence = sentence.rsplit("</think>", 1)[-1].strip()
     return jsonify({"sentence": sentence})
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5001, threaded=True)
