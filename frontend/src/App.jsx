@@ -6,11 +6,20 @@ function App() {
   const [selected, setSelected] = useState([]);
   const [sentence, setSentence] = useState('');
   const [loading, setLoading] = useState(false);
+  const [autoRead, setAutoRead] = useState(true);
 
   const toggleIcon = (label) => {
     setSelected(prev =>
       prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label]
     );
+  };
+
+  const speak = (text) => {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.95;
+    window.speechSynthesis.speak(utterance);
   };
 
   const generate = async () => {
@@ -24,6 +33,9 @@ function App() {
       });
       const data = await res.json();
       setSentence(data.sentence);
+      if (autoRead) {
+        speak(data.sentence);
+      }
     } catch (err) {
       setSentence('Generation failed, please try again');
     }
@@ -35,6 +47,17 @@ function App() {
   return (
     <div className="app">
       <h1>Silent Voice</h1>
+
+      <div className="auto-read-toggle">
+        <label>
+          <input
+            type="checkbox"
+            checked={autoRead}
+            onChange={(e) => setAutoRead(e.target.checked)}
+          />
+          Auto-read aloud
+        </label>
+      </div>
 
       {categories.map(cat => (
         <div key={cat} className="category">
@@ -62,7 +85,14 @@ function App() {
         {loading ? 'Generating...' : 'Generate'}
       </button>
 
-      {sentence && <div className="sentence-output">{sentence}</div>}
+      {sentence && (
+        <div className="sentence-output">
+          <span>{sentence}</span>
+          <button className="replay-btn" onClick={() => speak(sentence)}>
+            🔊
+          </button>
+        </div>
+      )}
     </div>
   );
 }
