@@ -228,7 +228,7 @@ function App() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('http://127.0.0.1:5001/api/generate', {
+      const res = await fetch('https://echo-of-words-3qd9.onrender.com/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ icons: selected.map(i => i.label) }),
