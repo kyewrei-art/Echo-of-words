@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from openai import OpenAI
-import os
+import os, re
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -20,35 +20,53 @@ def generate():
     data = request.json
     icons = data.get("icons", [])
 
+    if not icons:
+        return jsonify({"sentence": ""}), 400
+
     response = client.chat.completions.create(
         model="moonshotai/Kimi-K2.6",
         messages=[
             {
                 "role": "system",
                 "content": (
-                    "You help aphasia patients express themselves. "
-                    "Generate one natural, warm English sentence based only on "
-                    "the meaning represented by the selected icons. "
-                    "Include all relevant information represented by the icons, "
-                    "but keep the sentence concise. "
-                    "Do not add information the user did not express. "
-                    "Return only the final sentence."
+                    "Generate ONE short, natural English sentence based on "
+                    "the selected icons. The icons represent what the patient "
+                    "wants to communicate. Output ONLY the final sentence. "
+                    "Do not explain your reasoning. "
+                    "Do not describe the icons. "
+                    "Do not provide alternatives. "
+                    "Keep it simple and natural."
                 )
             },
             {
                 "role": "user",
-                "content": f"Icons: {', '.join(icons)}"
+                "content": f"Selected icons: {', '.join(icons)}"
             }
         ],
-        extra_body={
-            "thinking": {"type": "disabled"}
-        },
-        max_tokens=100,
+        max_tokens=1024,
     )
 
-    sentence = response.choices[0].message.content
-    if "</think>" in sentence:
-        sentence = sentence.rsplit("</think>", 1)[-1].strip()
+    # DEBUG — these must be AFTER the API call
+    print("MODEL RESPONSE:", response)
+    print("MESSAGE:", response.choices[0].message)
+    print("CONTENT:", repr(response.choices[0].message.content))
+    print("FINISH:", response.choices[0].finish_reason)
+
+    sentence = response.choices[0].message.content or ""
+
+    # Remove <think>...</think> if present
+    sentence = re.sub(
+        r"<think>.*?(</think>|$)",
+        "",
+        sentence,
+        flags=re.DOTALL | re.IGNORECASE
+    ).strip()
+
+    sentence = sentence.replace("**", "").strip()
+
+    if not sentence:
+        sentence = "Sorry, I couldn't form a sentence — please try again."
+
     return jsonify({"sentence": sentence})
 
 if __name__ == "__main__":
