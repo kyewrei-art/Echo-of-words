@@ -26,13 +26,13 @@ def generate():
             {
                 "role": "system",
                 "content": (
-                    "Return ONLY the final sentence. "
                     "You help aphasia patients express themselves. "
                     "Generate one natural, warm English sentence based only on "
                     "the meaning represented by the selected icons. "
                     "Include all relevant information represented by the icons, "
                     "but keep the sentence concise. "
                     "Do not add information the user did not express. "
+                    "Return only the final sentence."
                 )
             },
             {
@@ -40,7 +40,10 @@ def generate():
                 "content": f"Icons: {', '.join(icons)}"
             }
         ],
-        max_tokens=60,
+        extra_body={
+            "thinking": {"type": "disabled"}
+        },
+        max_tokens=100,
     )
 
     sentence = response.choices[0].message.content
